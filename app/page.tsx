@@ -1,23 +1,22 @@
-import {
-  getCoinsListCount,
-  getCoinsMarketData,
-} from '@/lib/services/coingecko/requests';
-
 import { columns } from './columns';
 import { DataTable } from './data-table';
 import { PageProps } from '@/lib/types';
 import { getCoinsWithMarketDataParams } from '@/lib/services/coingecko/schemas';
 import NotFound from '@/components/not-found';
+import { getCoinsListing } from '@/lib/services/cmc/requests';
 
 export default async function Home({ searchParams }: PageProps) {
   const params = getCoinsWithMarketDataParams.parse({
     page: searchParams.page,
     perPage: searchParams.per_page,
   });
-  const coins = await getCoinsMarketData(params);
-  const coinsListCount = await getCoinsListCount();
+  const { data, status } = await getCoinsListing(params);
 
-  if (!coins.length) {
+  if (!data) {
+    return <div>Oops! something went wrong</div>;
+  }
+
+  if (!data.length) {
     return <NotFound />;
   }
 
@@ -30,8 +29,8 @@ export default async function Home({ searchParams }: PageProps) {
       <DataTable
         // @ts-expect-error https://github.com/TanStack/table/issues/4302#issuecomment-1883209783
         columns={columns}
-        data={coins}
-        rowCount={coinsListCount}
+        data={data}
+        rowCount={status.total_count}
         rowsPerPage={params.perPage}
         currentPage={params.page}
       />

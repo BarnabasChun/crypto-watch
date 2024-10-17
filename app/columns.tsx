@@ -1,16 +1,17 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { CoinWithMarketData } from '@/lib/services/coingecko/schemas';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Star } from 'lucide-react';
-import Image from 'next/image';
+// import Image from 'next/image';
 import Link from 'next/link';
+
 import PriceChangePercentageCell from './price-change-percentage-cell';
 import { DataTableColumnHeader } from './data-table-column-header';
 import { sortRawMarketData } from './column-sorting';
+import { CoinListing } from '@/lib/services/cmc/schemas';
 
-const columnHelper = createColumnHelper<CoinWithMarketData>();
+const columnHelper = createColumnHelper<CoinListing>();
 export const columns = [
   columnHelper.display({
     id: 'star',
@@ -43,7 +44,7 @@ export const columns = [
         href={`/coins/${row.original.id}`}
         className="flex items-center gap-2 font-semibold"
       >
-        {row.original.imageUrl ? (
+        {/* {row.original.imageUrl ? (
           <Image
             src={row.original.imageUrl}
             alt=""
@@ -53,7 +54,7 @@ export const columns = [
           />
         ) : (
           <div className="w-6 h-6 mr-2 bg-gray-200"> </div>
-        )}
+        )} */}
         {row.original.name}{' '}
         <span className="text-muted-foreground">{row.original.symbol}</span>
       </Link>

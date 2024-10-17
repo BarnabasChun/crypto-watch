@@ -1,12 +1,12 @@
 import { Row } from '@tanstack/react-table';
 
-import { CoinWithMarketData } from '@/lib/services/coingecko/schemas';
 import { isNull, isUndefined } from '@/lib/type-predicates';
+import { CoinListing } from '@/lib/services/cmc/schemas';
 
 export const sortRawMarketData = (
-  rowA: Row<CoinWithMarketData>,
-  rowB: Row<CoinWithMarketData>,
-  columnId: keyof CoinWithMarketData['raw']
+  rowA: Row<CoinListing>,
+  rowB: Row<CoinListing>,
+  columnId: keyof CoinListing['raw']
 ) => {
   const a = rowA.original.raw[columnId];
   const b = rowB.original.raw[columnId];
